@@ -12,8 +12,8 @@
 
 
 /* This is the path to the symlink associated with the mouse-event file. 
- * It can also be obtained by calling functions like glob() or fnmatch() 
- * if there are multiple mice devices. */
+ * It will be obtained by calling like glob() with the wildcard argument,
+ * if there are multiple mice devices, then the first one will be chosen. */
 #define USB_PATH "/dev/input/by-id/usb-*-event-mouse"
 
 typedef enum {false, true} bool;
@@ -25,7 +25,7 @@ void handle_interrupt(int signum);
 
 
 /*****************************************************
- * This program will try to estimate how much did the
+ * This program will try to estimate how much did the mouse
  * moved. It'll take the mouse dpi as (command line)
  * argument, will record the events sent by the mouse
  * and will output the movements in inches.
@@ -132,7 +132,6 @@ int main(int argc, char *argv[]) {
 		else if (bytes_read!=sizeof(event)) {
 			fprintf(stderr, "invalid event; length - %lu, expected - %lu", bytes_read, sizeof(event));
 			/* ignoring the event and waiting for the next */
-			// TODO: consider terminating program here if necessary.
 			continue;
 		}
 
@@ -157,10 +156,10 @@ int main(int argc, char *argv[]) {
 			else if (event.code==REL_Y) {
 				y_axis+=abs(event.value);
 			}
-			/* other codes are available and will be ignored! */
+			/* other codes are available and will be ignored for now. */
 		}
 		else {
-			/* other types are available and will be ignored! */
+			/* other types are available and will be ignored for now. */
 		}
 
 		fflush(stdout);
