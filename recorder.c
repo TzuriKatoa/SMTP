@@ -20,7 +20,7 @@ typedef enum {false, true} bool;
 
 static bool not_interrupted=true;
 
-
+void test();
 void handle_interrupt(int signum);
 
 
